@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cypher | Emmanuel Ukpa — Web3 & Frontend Architect</title>
+    <link rel="icon" type="image/png" href="logo.jpeg">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    <!-- End Google Tag Manager -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --navy-deep: #020617;
+            --navy-card: rgba(15, 23, 42, 0.7);
+            --electric-blue: #38bdf8;
+            --emerald: #10b981;
+            --glow: rgba(56, 189, 248, 0.3);
+            --text-ghost: #94a3b8;
+            --white: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--navy-deep);
+            color: var(--white);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .brand {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- Space Background --- */
+        #star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        nav {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--electric-blue);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .hero-pre {
+            color: var(--electric-blue);
+            font-family: 'Space Grotesk';
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero .name-gradient {
+            background: linear-gradient(to right, #fff, var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-ghost);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* --- Buttons --- */
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-main {
+            background: var(--electric-blue);
+            color: var(--navy-deep);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--electric-blue);
+        }
+
+        .btn-ghost {
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--electric-blue);
+        }
+
+        /* --- Section Styles --- */
+        .section-label {
+            color: var(--electric-blue);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            margin: 5rem 0 2rem;
+            display: block;
+            text-align: center;
+        }
+
+        .about-text {
+            background: var(--navy-card);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            margin-bottom: 3rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--text-ghost);
+        }
+
+        /* --- Project Grid & Cards --- */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--navy-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: 0.4s;
+            backdrop-filter: blur(12px);
+        }
+
+        .project-card:hover {
+            border-color: var(--electric-blue);
+            transform: translateY(-5px);
+        }
+
+        .browser-header {
+            background: #1e293b;
+            padding: 10px 20px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+        .url-bar {
+            background: #0f172a;
+            color: var(--text-ghost);
+            font-size: 0.7rem;
+            padding: 4px 15px;
+            border-radius: 4px;
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+
+        .embed-container {
+            height: 450px;
+            width: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        .project-info {
+            padding: 2rem;
+        }
+        .project-info h3 {
+            font-family: 'Space Grotesk';
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--electric-blue);
+        }
+        .tech-pill {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--electric-blue);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .visit-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--electric-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: opacity 0.3s;
+        }
+        .visit-link i {
+            margin-left: 6px;
+        }
+        .visit-link:hover {
+            opacity: 0.8;
+        }
+
+        /* Migration box */
+        .migration-box {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: 1rem;
+        }
+        .migration-arrow { color: var(--electric-blue); font-size: 1.5rem; }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--navy-card);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            margin-bottom: 4rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--white);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--electric-blue);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .submit-btn {
+            background: var(--electric-blue);
+            color: var(--navy-deep);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--electric-blue);
+        }
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            color: var(--emerald);
+            margin-top: 1rem;
+        }
+
+        /* WhatsApp floating button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #20b959;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-ghost);
+            font-size: 0.8rem;
+        }
+        .social-links a {
+            color: var(--text-ghost);
+            margin: 0 10px;
+            transition: color 0.3s;
+            font-size: 1.4rem;
+        }
+        .social-links a:hover {
+            color: var(--electric-blue);
+        }
+
+        @media (max-width: 768px) {
+            .embed-container { height: 300px; }
+            .migration-box { flex-direction: column; text-align: center; }
+            .cta-group { flex-direction: column; width: 100%; }
+            .btn { justify-content: center; }
+            .hero h1 { font-size: 3.5rem; }
+            .hero { min-height: auto; padding: 4rem 0; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 20px; }
+            .project-card { margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div id="star-container"></div>
+
+    <div class="container">
+        <nav>
+            <div class="brand">CYPHER.DEV</div>
+            <div class="social-links">
+                <a href="https://github.com/Cypher-The-Dev" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://instagram.com/Cypherthedeveloper" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <span class="hero-pre">SYSTEM_INIT_SUCCESS</span>
+            <h1>Hi, I'm <span class="name-gradient">Emmanuel Ukpa</span></h1>
+            <h2 style="font-size: 2rem; margin-top: -0.5rem; margin-bottom: 1rem; opacity: 0.9;">Also Known as <strong style="color: var(--electric-blue);">Cypher The Developer</strong>.</h2>
+            <p>A Frontend Architect & Web3 Engineer based in Enugu. I build high-performance interfaces and automated ecosystems for the decentralized web.</p>
+            <div class="cta-group">
+                <a href="mailto:Cypherddev@gmail.com" class="btn btn-main">Launch Project <i class="fas fa-rocket"></i></a>
+                <a href="#projects" class="btn btn-ghost">View Artifacts</a>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <span class="section-label">ABOUT ME</span>
+        <div class="about-text">
+            <p>I'm a passionate developer with over 4 years of experience in building modern web applications, specializing in frontend architecture and Web3 integrations. My journey started with HTML/CSS and evolved into mastering React, Node.js, and blockchain technologies.</p>
+            <p>As <strong>Cypher The Developer</strong>, I focus on creating seamless digital experiences that merge creative design with robust functionality. I've worked with startups and established companies to optimize performance, migrate legacy systems, and implement automated solutions like subscription bots.</p>
+            <p>When I'm not coding, I'm exploring new tech, contributing to open source, or mentoring aspiring developers. My goal is to build tools that empower communities and make complex systems accessible to everyone.</p>
+            <p>I am also highly skilled in WordPress CMS, specializing in custom themes and site management. check bottom of page for more info</p>
+        </div>
+
+        <!-- Live Deployments Section -->
+        <span class="section-label">LIVE DEPLOYMENTS</span>
+        <div class="projects" id="projects">
+            <!-- FinTrack Web3 Card -->
+            <div class="project-card">
+                <div class="browser-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <div class="url-bar">https://fintrack-web3.netlify.app/</div>
+                </div>
+                <iframe src="https://fintrack-web3.netlify.app/" class="embed-container" loading="lazy"></iframe>
+                <div class="project-info">
+                    <h3>FinTrack Web3</h3>
+                    <p style="margin-bottom: 1rem;">A premier Web3 portfolio analyzer connecting MetaMask with Gemini AI for predictive asset insights.</p>
+                    <span class="tech-pill">React</span><span class="tech-pill">Web3.js</span><span class="tech-pill">Gemini AI</span><span class="tech-pill">Tailwind</span>
+                    <a href="https://fintrack-web3.netlify.app/" target="_blank" class="visit-link">Visit Live Site <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Virtuesland Card -->
+            <div class="project-card">
+                <div class="browser-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <div class="url-bar">https://virtuesland.netlify.app/</div>
+                </div>
+                <iframe src="https://virtuesland.netlify.app/" class="embed-container" loading="lazy"></iframe>
+                <div class="project-info">
+                    <h3>Virtuesland School</h3>
+                    <p style="margin-bottom: 1rem;">A high-conversion landing site built for institutional growth and enrollment management.</p>
+                    <span class="tech-pill">Modern HTML/CSS/JS</span><span class="tech-pill">Mobile-First</span><span class="tech-pill">SEO Optimized</span>
+                    <a href="https://virtuesland.netlify.app/" target="_blank" class="visit-link">Visit Live Site <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Subsy Bot Card (no external link) -->
+            <div class="project-card">
+                <div class="project-info">
+                    <h3>Subsy Engine</h3>
+                    <p style="margin-bottom: 1rem;">Automated subscription management for creators. Bridges Telegram communities with recurring revenue.</p>
+                    <div class="tags">
+                        <span class="tech-pill">Node.js</span>
+                        <span class="tech-pill">Telegraf</span>
+                        <span class="tech-pill">API</span>
+                    </div>
+                    <div style="background: #000; border-radius: 12px; padding: 20px; font-family: monospace; font-size: 0.8rem; color: var(--emerald); border: 1px solid var(--emerald); margin-top: 1.5rem;">
+                        > Initializing Subsy_Engine...<br>
+                        > User_Auth: SUCCESS<br>
+                        > Payment_Gateway: ACTIVE<br>
+                        > Gated_Access: ENABLED
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Case Studies (migration) -->
+        <span class="section-label">TECHNICAL CASE STUDIES</span>
+        <div class="project-card" style="padding: 2rem; margin-bottom: 3rem;">
+            <h3>CRA to Vite Migration</h3>
+            <p style="color: var(--text-ghost); margin-top: 0.5rem;">Contracted to modernize a legacy enterprise React application.</p>
+            <div class="migration-box">
+                <div style="text-align: center; opacity: 0.6;">
+                    <p style="font-size: 0.7rem; margin-bottom: 0.5rem;">LEGACY</p>
+                    <div class="tech-pill" style="background: #334155; color: #fff;">Create React App</div>
+                </div>
+                <div class="migration-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div style="text-align: center;">
+                    <p style="font-size: 0.7rem; margin-bottom: 0.5rem; color: var(--electric-blue);">MODERNIZED</p>
+                    <div class="tech-pill" style="background: var(--electric-blue); color: var(--navy-deep);">React 18 + Vite + Tailwind</div>
+                </div>
+            </div>
+            <ul style="margin-top: 1.5rem; color: var(--text-ghost); font-size: 0.9rem; list-style: none;">
+                <li><i class="fas fa-check" style="color: var(--emerald);"></i> Build speed increased by ~400%</li>
+                <li><i class="fas fa-check" style="color: var(--emerald);"></i> UI upgrade to modern atomic component structure</li>
+                <li><i class="fas fa-check" style="color: var(--emerald);"></i> Reduced bundle size by 30%</li>
+            </ul>
+        </div>
+
+        <!-- Contact Section with Netlify Form -->
+        <span class="section-label">CONTACT ME</span>
+        <div class="contact-form">
+            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
+                <input type="hidden" name="form-name" value="contact">
+                <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Your Message..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+                <div class="form-success" id="form-success">Message sent successfully! I'll get back to you soon.</div>
+            </form>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0 4rem;">
+            <p style="color: var(--text-ghost);">Also proficient in <strong style="color: var(--white);">WordPress CMS</strong> customization.</p>
+            <a href="http://cypherprojects.onlinewebshop.net" target="_blank" style="color: var(--electric-blue); text-decoration: none; font-size: 0.8rem;">Explore WP Portfolio →</a>
+        </div>
+
+        <footer>
+            <p>SYSTEM STATUS: ONLINE // © 2026 CYPHER THE DEVELOPER</p>
+            <div class="social-links" style="margin-top: 1rem;">
+                <a href="https://instagram.com/Cypherthedeveloper" target="_blank"><i class="fab fa-instagram"></i> @Cypherthedeveloper</a>
+                <a href="https://wa.me/2348187231778" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- WhatsApp floating button -->
+    <a href="https://wa.me/2348187231778" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Star Generation
+        const container = document.getElementById('star-container');
+        const starCount = 150;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            container.appendChild(star);
+        }
+
+        // Parallax Effect
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            container.style.transform = `translate(-${x * 10}px, -${y * 10}px)`;
+        });
+
+        // Handle form submission to show success message (optional)
+        const form = document.querySelector('form');
+        const successDiv = document.getElementById('form-success');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                // The actual submission is handled by Netlify; this just shows a message after successful submission
+                // Netlify will redirect to a success page by default, but we can prevent default for AJAX? 
+                // For simplicity, we'll let Netlify handle it. This success message won't show unless we use AJAX.
+                // To keep it simple, we'll not override Netlify's default behavior.
+                // If you want a custom success message without redirect, you'd need to use fetch.
+                // But this is fine for most cases.
+            });
+        }
+    </script>
+</body>
+</html>
